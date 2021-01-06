@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Delete Tasks</title>
+	<meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	{% load static %}
+	<style type="text/css">
+		body{
+			background-image: url("{% static 'images/background.png' %}");
+		}
+	</style>
+		<link rel="icon" href="{% static 'images/icon.png'%}" type="image/gif">	<!--title Image-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+	
+
+</head>
+<body>
+	{% csrf_token %}
+	<form action="/removeall/" method="POST" 
+	class="delete">
+	<fieldset>
+		
+	
+		<h4>Are you sure, you want to DELETE All the Tasks ? </h4>
+		
+		<br><hr>
+		<input type="submit" value="Yes" class="button btn btn-secondary" style="color: black"/>&nbsp;&nbsp;
+		<a href="/show/" style="color: white">Cancel</a>
+		</fieldset>
+	</form>
+</body>
+</html>
+

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To-do List</title>
+	<meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    	<!--Bootstrap CSS-->
+    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  	<link href='https://fonts.googleapis.com/css?family=Orbitron' rel='stylesheet' type='text/css'>
+    	
+	{% load static %}
+	<style type="text/css">
+		.cal{
+			background-image: url("{% static 'images/calendar.png' %}");background-repeat: no-repeat;
+			background-size:cover;
+			border:none;
+			text-decoration: unset;
+			font-family: monospace;
+			border-bottom: 1px solid rgb(200,50,50);
+			border-radius: 5px;
+			padding: 5px;
+
+		}
+	</style>
+	
+	<link rel="icon" href="{% static 'images/icon.png'%}" type="image/gif">	<!--title Image-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+	<script>
+			var myVar;
+
+			function myFunction() {
+			  var dt = new Date();
+			document.getElementById("date").innerHTML=dt.toLocaleDateString();
+			document.getElementById("time").innerHTML=dt.toLocaleTimeString();
+			}
+
+			
+
+		 </script>
+	
+</head>
+<body onload="setInterval(myFunction,1000)">
+	
+	<div class="jumbotron" id="header">
+		{% load static %}
+		
+
+		 <div class="cal" style="float: right;font-size: larger;color:rgb(50,50,50);margin:0px 40px;text-align: center;">
+		 	<br><br>
+		 <span id="date" >DD/MM/YYYY</span><br><span id="time">HH:MM:SS AM</span></div>
+		  
+
+
+
+			<img src="{% static 'images/1.png '%}" width=100 height="120" style="float: left;margin: 0px 25px"/>
+		  <h1 style="margin: 0px 25px ; font-size: 500">To-do List</h1>
+		 <p style="margin: 0px 25px;color: rgb(150,150,150);">&nbsp;&nbsp;&nbsp;&nbsp;Manage your tasks on the Go...</p>
+		 <br>
+		 <a href="/input/" style="color: white">
+		  	<button style="float:right;margin:0px 25px;" class="btn btn-primary btn-lg" >+ Add a Task</button></a>
+
+		  
+		  
+
+
+
+	</div>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+	{% include 'messages.html' %}
+
+	<table class="table table-hover mytable" style="font-family: cursive ;">
+		{% if Data %}
+		
+			<tr style="background-color: none; font-size: large;">
+				<th></th>
+				<th></th>
+				<th>Task</th>
+				<th>Date</th>
+				<th>Time</th>
+				
+				<th>Edit</th>
+				<th>
+					<a href="/removeall/">Delete All </a>
+				</th>
+				
+			</tr>
+			{% for x in Data %}
+			
+			<tr>
+				<td></td>
+				
+				{% if x.complete %}
+				<td>
+					<form action="{% url 'complete' x.date x.id  %}" method ="POST" class="complete">
+					{% if x.expired %}
+					<button type="submit" title="Disabled" class="mark disabled" disabled="disabled">
+					{% else %}
+					<button type="submit" title="Mark as Not Done" class="mark">
+					{% endif %}
+						<img src="{% static 'images/tick1.png'%}" height="20" width="20"  >
+											
+					</button>
+				</form>  
+				</td>
+				{% else %}
+				<td>
+					<form action="{% url 'complete' x.title x.id  %}" method ="POST" class="complete">
+					
+					{% if x.expired %}
+					<button type="submit" title="Disabled" class="mark disabled" disabled="disabled">
+					{% else %}
+					<button type="submit" title="Mark as Done" class="mark">
+					{% endif %}
+						<img src="{% static 'images/tick2.png'%}" height="20" width="20" ></button>
+				</form></td>
+				{% endif %}
+
+
+				{% if x.expired %}
+				<td><del title="Task Expired">{{x.title}} </del></td>
+				{% elif  x.complete %}
+				<td title="Task Completed">{{ x.title }}</td>
+				{% else %}
+				<td><b title="To-do">{{x.title}}</b></td>
+				{% endif %}
+				<td>{{ x.date }}</td>
+				<td>{{ x.time }}</td>
+
+
+				
+				
+
+
+
+				<td>
+					<a href="{% url 'update' x.id  %}" title="Edit Task">
+					<img src="{% static 'images/edit.png' %}" height="25" width="25"></a>
+				</td>
+				<td><a href="{% url 'delete' x.id  %}" title="Delete Task">
+					<img src="{% static 'images/delete.png' %}" height="20" width="15">
+				</a></td>
+			</tr>
+
+			
+		
+			{% endfor %}
+			</table>
+		{% else %}
+		<div style="text-align: center; color: rgb(150,150,150);">
+					
+			<p style="font-size: 100px">&#128542;</p>
+			<p style="font-family:unset;">
+			No Task Yet.<br> 
+			Tap <a href="/input/">+Add a Task </a>button to add New task. <br><br></p>
+		</div>
+		{% endif %}
+
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<footer class="footer">
+	
+<fieldset>
+	<img src="{% static 'images/dee.png' %}" height="150" width="150">
+<span style="padding-left: 50px;font-stretch: extra-expanded;font-size: 50px;vertical-align: middle; font-family: Bookman;color:#44352E;">deeWare creations!!!</span>
+
+	<div class="foot">
+		
+		<br>
+		<a href="mailto:deeware2000@gmail.com?Subject=Contact(To-do List)" title="Email">
+		<img src="{% static 'images/email.png'%}" height="70" width="70"/></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="https://github.com/deeware/To-do-List.git" target="_blank" title="Github">
+		<img src="{% static 'images/github.png'%}" height="70" width="70"/></a>
+		&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="https://www.linkedin.com/in/deepak-ware-a52b541b4/" target="_blank" title="Linkedin">
+		<img src="{% static 'images/linkedin.png'%}" height="70" width="70"/></a>
+	</div>
+</fieldset>
+</footer>
+
+</body>
+
+
+<script>
+    $(document).ready(function(){
+window.setTimeout(function() {
+  $(".alert").fadeTo(500, 0).slideUp(500, function(){
+      $(this).remove();
+  });
+}, 2000);
+});
+
+ 
+</script>
+
+</html>
+
+			<!--br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+			<br><br><br><br><br><br><br><br><br><br><br><br-->

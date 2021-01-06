@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Update Task</title>
+	<meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	  {% load static %}
+	  <style type="text/css">
+		body{
+			background-image: url("{% static 'images/cool-background3.png' %}");
+		}
+	</style>
+		<link rel="icon" href="{% static 'images/icon.png'%}" type="image/gif">	<!--title Image-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+	
+	
+</head>
+<body>
+	<div class="form-group">
+	{% csrf_token %}
+	<form action="{% url 'update' obj.id  %}" method="POST" class="frm">
+		<fieldset>
+			<legend>Update "{{obj.title}}"
+			 <a href="/show/" style="float: right;font-size: medium;color: white;margin-top: 20px ">Cancel</a>
+			</legend>
+
+		{{frm.as_p}}
+		
+		<input type="submit" value="Update" class="form-control button"/>
+		
+	</fieldset>
+	</form>
+	</div>
+</body>
+</html>
+
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Task</title>
+	<meta charset="utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	  {% load static %}
+	  <style type="text/css">
+		body{
+			background-image: url("{% static 'images/cool-background3.png' %}");
+		}
+	</style>
+		<link rel="icon" href="{% static 'images/icon.png'%}" type="image/gif">	<!--title Image-->
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+	
+
+</head>
+<body >
+
+	<div class="form-group" >
+	<form method="post" action='/save/' class="frm" >
+		<fieldset>
+			<legend>Add Your Task
+				<a href="/show/" style="float: right;font-size: medium;color: white;margin-top: 20px ">Cancel</a>
+			</legend>
+		{% csrf_token %}
+		{{ form.as_p }}
+		<input type="submit" value="Save Task" class="form-control button" >
+	</fieldset>
+	</form>
+	</div>
+	<!--form method="post" action='/save/'>
+		Title : <input type="text" name="title"><br>
+		Date : <input type="date" name="date"><br>
+		Time : <input type="time" name="time"><br>
+		<input type="submit" value="Save Task">
+	</form-->
+		
+</body>
+</html>
